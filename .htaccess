@@ -1,0 +1,20 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteRule ^dashboard$ /index.php?dashboard=index [L]
+RewriteRule ^dashboard/bookmark$ /index.php?dashboard=bookmark [L]
+RewriteRule ^dashboard/([^/]*)$ /index.php?dashboard=index$1 [L]
+RewriteRule ^dashboard/source/walkthrough$ /index.php?dashboard=index&routefinder&all [L]
+RewriteRule ^dashboard/source/walkthrough/?(.*)$ /index.php?dashboard=index&routefinder&get=$1 [L]
+RewriteRule ^dashboard/source/([^/]*)$ /index.php?dashboard=index&source=$1 [L]
+RewriteRule ^connect([^/]*)$ /includes/scope.php$1 [L]
+RewriteRule ^logout$ /includes/logout.php [L]
+RewriteRule ^dashboard/search/([^/]*)$ /index.php?dashboard=index&smartsearch&find=$1 [L]
+RewriteRule ^dashboard/bookit([^/]*)$ /index.php?bookit$1 [L]
+RewriteRule ^([0-9a-zA-Z]{6})$ /includes/redirect.php?code=$1
+
+ErrorDocument 404 /404.html
+ErrorDocument 403 /403.html
+
+
+

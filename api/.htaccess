@@ -1,0 +1,7 @@
+
+RewriteEngine on
+RewriteBase /api
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^get/([^/]*)$ apitaste.php$1 [L]
+

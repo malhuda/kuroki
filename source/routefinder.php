@@ -1,0 +1,89 @@
+<?php 
+include('./includes/curl.php');
+// Ambil data sebelah 
+if(isset($_GET['all'])) {
+      $html = str_get_html(pakai_curl('http://seiya-saiga.com/game/kouryaku.html'));
+        foreach($html->find('B') as $element) {
+            foreach($element->find("A[href]") as $linked)
+            {
+            $nc = "http://kuroki.ml/".($linked->href);
+            $urlParts = parse_url($nc);
+            $path = $urlParts['path'];
+            $name = explode('/', $path);
+            $values[] = array(
+            'developer' => $name[1],
+            'name' => pathinfo($name[2], PATHINFO_FILENAME),
+             );
+         
+          }
+          }    
+
+}
+
+
+?>
+<style>
+a.list-group-item {
+    height: auto;
+    min-height: auto;
+}
+</style>
+ <div class="row">
+
+
+ <div style="margin-top:-20px">
+            <div class="list-group">
+             <?php
+if(isset($_GET['all'])) {
+ foreach($values as $row) {
+?>
+
+
+<a href="#" onclick="location.href = '/dashboard/source/walkthrough/<?php echo $row['developer']; ?>/<?php echo $row['name']; ?>'" class="list-group-item">
+      <div class="goleft">
+      <h4 class="list-group-item-heading" style="text-transform: capitalize;"><?php echo $row['name']; ?></h4>
+      <p class="list-group-item-text" style="text-transform: capitalize;"><?php echo $row['developer']; ?></p>
+      </div>
+        <span class="pull-right" style="position: relative;
+    top: -37px;">
+    <button type="button" onclick="window.open('https://www.google.com/#q=vndb+<?php echo $row['developer']; ?> <?php echo $row['name']; ?>');" class="btn btn-info" title="Search with Google"><i class="material-icons">&#xE8B6;</i></button>
+    <button type="button" onclick="location.href = '/dashboard/source/walkthrough/<?php echo $row['developer']; ?>/<?php echo $row['name']; ?>'" class="btn btn-warning" title="See this Walkthrough"><i class="material-icons">&#xE8F4;</i></button>
+    </span>
+    </a>
+
+
+<?php } 
+}
+else if(isset($_GET['get'])) {
+         $html = str_get_html(pakai_curl('http://seiya-saiga.com/game/'.$_GET['get'].'.html'));
+          foreach($html->find('TABLE[border=1] tbody tr th') as $element) {
+            $patterns[0] = '/<img[^>]+\>/i';
+            $patterns[1] = '#<a.*?>(.*?)</a>#i';
+            $patterns[2] = '/<iframe.*?\/iframe>/i';
+            $patterns[3] = '/\r|\n/';
+            $c_element = preg_replace($patterns,'', $element);
+
+            echo $c_element; 
+
+          }
+           
+
+
+}
+else
+          {} 
+?>
+
+         </div>
+     
+
+         </div>
+
+        </div>
+
+
+
+
+
+      </div>
+
